@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">MoRoCo</string>
+    <string name="btnConnection">ПОДЛЮЧИТЬСЯ</string>
+
 </resources>
