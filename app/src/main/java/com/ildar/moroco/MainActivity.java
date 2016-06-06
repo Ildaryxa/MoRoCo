@@ -24,7 +24,10 @@ public class MainActivity extends Activity {
                 //значит bluetooth выключен, попросить пользователя включить его
                 Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
                 startActivityForResult(enableBtIntent, REQUEST_ENABLED_BLUETOOTH);
+            }else {
+                createActivity();
             }
+
         } else {
             //bluetooth модуля не сущесвует
             Toast.makeText(this, "На данном устройстве нет Bluetooth", Toast.LENGTH_SHORT).show();
@@ -35,11 +38,15 @@ public class MainActivity extends Activity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data){
         if (resultCode == RESULT_OK){
-            Intent intent = new Intent(this, DeviceSelection.class);
-            startActivity(intent);
+            createActivity();
         }
         else{
             Toast.makeText(this, "Для дальнейшей работы необходимо Bluetooth соединение!", Toast.LENGTH_LONG).show();
         }
+    }
+
+    private void createActivity(){
+        Intent intent = new Intent(this, DeviceSelection.class);
+        startActivity(intent);
     }
 }
