@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="15dp"
+    android:paddingTop="15dp"
+    android:paddingRight="15dp"
+    android:paddingEnd="15dp"
+    tools:context="com.ildar.moroco.Control">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Скорость:"
+        android:textStyle="bold"
+        android:textSize="20sp"
+        android:id="@+id/textView" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:textSize="20dp"
+        android:text="-500"
+        android:layout_above="@+id/seekBar_speed"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:id="@+id/textView_speed" />
+    <SeekBar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:max="1000"
+        android:layout_below="@+id/textView"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:id="@+id/seekBar_speed" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Поворот:"
+        android:textStyle="bold"
+        android:textSize="20dp"
+        android:id="@+id/textView2"
+        android:layout_below="@+id/seekBar_speed"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+    <TextView
+        android:id="@+id/textView_rotade"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:textSize="20dp"
+        android:text="-2000"
+        android:layout_above="@+id/seekBar_Rotade"
+        android:layout_alignRight="@+id/textView_speed"
+        android:layout_alignEnd="@+id/textView_speed" />
+    <SeekBar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:max="4000"
+        android:layout_below="@+id/textView2"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:id="@+id/seekBar_Rotade" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Forward"
+        android:id="@+id/btForward"
+        android:layout_marginTop="34dp"
+        android:layout_below="@+id/seekBar_Rotade"
+        android:layout_centerHorizontal="true"
+        android:onClick="onForward"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Stop"
+        android:id="@+id/btStop"
+        android:layout_below="@+id/btForward"
+        android:layout_centerHorizontal="true"
+        android:onClick="onStop"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Right"
+        android:id="@+id/btRight"
+        android:layout_alignBottom="@+id/btStop"
+        android:layout_toRightOf="@+id/btStop"
+        android:layout_toEndOf="@+id/btStop"
+        android:onClick="onRight"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Left"
+        android:id="@+id/btLeft"
+        android:layout_alignBottom="@+id/btStop"
+        android:layout_toLeftOf="@+id/btStop"
+        android:layout_toStartOf="@+id/btStop"
+        android:onClick="onLeft"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Down"
+        android:id="@+id/btDown"
+        android:onClick="onDown"
+        android:layout_below="@+id/btStop"
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@+id/btLeft"
+        android:layout_toEndOf="@+id/btLeft" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Скорость"
+        android:id="@+id/button"
+        android:layout_below="@+id/btDown"
+        android:layout_alignLeft="@+id/btLeft"
+        android:layout_alignStart="@+id/btLeft"
+        android:layout_marginTop="45dp"
+        android:onClick="onSpeed"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Поворот"
+        android:id="@+id/button2"
+        android:layout_alignTop="@+id/button"
+        android:layout_alignRight="@+id/btRight"
+        android:layout_alignEnd="@+id/btRight"
+        android:onClick="onRotade"/>
+
+</RelativeLayout>
