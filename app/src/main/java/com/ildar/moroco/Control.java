@@ -1,5 +1,6 @@
 package com.ildar.moroco;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -7,12 +8,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.SeekBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.util.ArrayList;
-import java.util.List;
 
 public class Control extends AppCompatActivity {
 
@@ -89,16 +87,13 @@ public class Control extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menumain, menu);
+        getMenuInflater().inflate(R.menu.menu_control, menu);
         return true;
     }
 
     public void getMapping(MenuItem item) {
-
-    }
-
-    public void getControl(MenuItem item) {
-        Toast.makeText(this, "Перед вами пульт управления.", Toast.LENGTH_LONG).show();
+        Intent intent = new Intent(this, SetMap.class);
+        startActivity(intent);
     }
 
     public void onForward(View view) {
@@ -110,7 +105,7 @@ public class Control extends AppCompatActivity {
     }
 
     public void onRight(View view) {
-        robot.rotade((char) -Math.abs(speed),(char) -1);
+        robot.rotade((char) Math.abs(speed),(char) -1);
     }
 
     public void onLeft(View view) {
