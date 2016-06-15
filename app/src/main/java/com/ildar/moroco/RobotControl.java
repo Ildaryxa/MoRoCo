@@ -5,6 +5,8 @@ package com.ildar.moroco;
  */
 public interface RobotControl {
     void move(char velocity);  //вперед
+    void move(char velocity, double meters);
     void rotade(char velocity, char rotatespeed);  //поворот
+    void rotade(char velocity, char rotatespeed, double degrees);
     void stop();
 }
