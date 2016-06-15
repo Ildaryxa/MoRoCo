@@ -33,7 +33,6 @@ public class SetMap extends AppCompatActivity {
     static final String TAG = "iRobot";
     private boolean correctSizeRoom = false;
     private boolean canPlay = false;
-    Context context;
     int heightRoom;
     int weightRoom;
     double alphaHeight;
@@ -46,7 +45,7 @@ public class SetMap extends AppCompatActivity {
         setContentView(drawView);
         getIO();
         robot = new iRobotCreate(outStream, inputStream);
-        context = getApplicationContext();
+        robot.safeMode();
     }
 
     public void getIO() {
@@ -112,6 +111,7 @@ public class SetMap extends AppCompatActivity {
                 startActivity(intent);
                 break;
             case (R.id.stop):
+                    robot.stop();
                     canPlay = false;
                 break;
         }
@@ -121,30 +121,21 @@ public class SetMap extends AppCompatActivity {
         public void play() {
             points = drawView.getPoints();
             if (points==null || points.size() <= 1) {
-                Toast.makeText(context, "Маршрут не задан!", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "Маршрут не задан!", Toast.LENGTH_LONG).show();
                 drawView.allowedDraw();
             }else {
                 double meters;
                 double degrees;
                 double cos;
                 double deltaX, deltaY;
+                char turn;
                 long time;
                 Point p1, p2, p3;
                 p1 = points.get(0);
                 p2 = points.get(1);
                 meters = lenght1(p1, p2);
                 Log.d(TAG, "РАССтОЯНИЕ " + meters);
-                robot.move((char) 500);
-                if (canPlay) {
-                    try {
-                        time = Math.round(meters * 2000);
-                        Log.d(TAG, "Время " + time);
-                        Thread.sleep(time);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }
-                robot.stop();
+                robot.addStraight((char) 400, (char)(Math.round(meters*1000)));
                 if (points.size() > 1 && canPlay){
                     for (int i = 2; i < points.size() ; i++) {
                         p3 = points.get(i);
@@ -155,87 +146,55 @@ public class SetMap extends AppCompatActivity {
                         if ((deltaX>0 && deltaY<0) || (deltaX>0 && deltaY>0)){
                             //первая четверть и четвертая
                             if (p3.y <= ((p2.y - p1.y)/(p2.x-p1.x) * p3.x + p1.y - (p2.y - p1.y)*p1.x/(p2.x-p1.x))){
-                                robot.rotade((char) 500, (char) 1); //поворот налево
-                                Log.d(TAG, "угол налево" + degrees);
+                                turn = (char) 1;
                             }else {
-                                robot.rotade((char) 500, (char) -1); //поворот направо
-                                Log.d(TAG, "угол направо" + degrees);
+                                turn = (char) -1;
                             }
                         }else if ((deltaX<0 && deltaY<0) || (deltaX<0 && deltaY>0)){
                             //вторая четверть и третья
                             if (p3.y >= ((p2.y - p1.y)/(p2.x-p1.x) * p3.x + p1.y - (p2.y - p1.y)*p1.x/(p2.x-p1.x))){
-                                robot.rotade((char) 500, (char) 1); //поворот налево
-                                Log.d(TAG, "угол налево" + degrees);
+                                turn = (char) 1;
                             }else {
-                                robot.rotade((char) 500, (char) -1); //поворот направо
-                                Log.d(TAG, "угол направо" + degrees);
+                                turn = (char) -1;
                             }
                         }else {
                             //попали на прямую, параллельную одной из оси координат
                             if ((deltaX == 0) && (deltaY<=0))  {
                                 if (p1.x >= p3.x){
-                                    robot.rotade((char) 500, (char) 1); //поворот налево
-                                    Log.d(TAG, "угол налево" + degrees);
+                                    turn = (char) 1;
                                 }else {
-                                    robot.rotade((char) 500, (char) -1); //поворот направо
-                                    Log.d(TAG, "угол направо" + degrees);
+                                    turn = (char) -1;
                                 }
                             }else if (deltaX == 0 && deltaY>=0){
                                 if (p1.x <= p3.x){
-                                    robot.rotade((char) 500, (char) 1); //поворот налево
-                                    Log.d(TAG, "угол налево" + degrees);
+                                    turn = (char) 1;
                                 }else {
-                                    robot.rotade((char) 500, (char) -1); //поворот направо
-                                    Log.d(TAG, "угол направо" + degrees);
+                                    turn = (char) -1;
                                 }
                             }else if (deltaY == 0 && deltaX>=0){
                                 if (p1.y >= p3.y){
-                                    robot.rotade((char) 500, (char) 1); //поворот налево
-                                    Log.d(TAG, "угол налево" + degrees);
+                                    turn = (char) 1;
                                 }else {
-                                    robot.rotade((char) 500, (char) -1); //поворот направо
-                                    Log.d(TAG, "угол направо" + degrees);
+                                    turn = (char) -1;
                                 }
                             }else {
                                 if (p1.y <= p3.y){
-                                    robot.rotade((char) 500, (char) 1); //поворот налево
-                                    Log.d(TAG, "угол налево" + degrees);
+                                    turn = (char) 1;
                                 }else {
-                                    robot.rotade((char) 500, (char) -1); //поворот направо
-                                    Log.d(TAG, "угол направо" + degrees);
+                                    turn = (char) -1;
                                 }
                             }
                         }
-                        if (canPlay) {
-                            try {
-                                time = Math.round(1035 * degrees / 180);
-                                Log.d(TAG, "Время поворот" + time);
-                                Thread.sleep(time);
-                            } catch (InterruptedException e) {
-                                e.printStackTrace();
-                            }
-                        }else
-                            break;
-                        robot.stop();
+                        robot.addRotade((char) 400, turn, (char)Math.round(degrees));
                         meters = lenght1(p3, p2);
                         Log.d(TAG, "РАССтОЯНИЕ " + meters);
-                        robot.move((char) 500);
-                        if (canPlay) {
-                            try {
-                                time = Math.round(meters * 2000);
-                                Log.d(TAG, "Время вперед" + time);
-                                Thread.sleep(time);
-                            } catch (InterruptedException e) {
-                                e.printStackTrace();
-                            }
-                        }else
-                            break;
-                        robot.stop();
+                        robot.addStraight((char) 400, (char)(Math.round(meters*1000)));
                         p1=p2;
                         p2=p3;
                     }
                 }
-                Toast.makeText(getApplicationContext(), "Робот закончил движение", Toast.LENGTH_LONG).show();
+                robot.startSequenceCommand();
+                Toast.makeText(this, "Робот получил последовательность команд", Toast.LENGTH_LONG).show();
                 drawView.allowedDraw();
             }
 

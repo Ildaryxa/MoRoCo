@@ -34,6 +34,7 @@ public class Control extends AppCompatActivity {
         setupSeekBar();
         getIO();
         robot = new iRobotCreate(outStream, inputStream);
+        robot.fullMode();
     }
 
 
@@ -51,8 +52,8 @@ public class Control extends AppCompatActivity {
         sbSpeed.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                tvSpeed.setText("" + (progress - 500));
-                speed = progress - 500;
+                tvSpeed.setText("" + progress);
+                speed = progress;
             }
 
             @Override
@@ -69,8 +70,8 @@ public class Control extends AppCompatActivity {
         sbRotade.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                tvRotade.setText("" + (progress - 2000));
-                rotade = progress - 2000;
+                tvRotade.setText("" + progress);
+                rotade = progress;
             }
 
             @Override

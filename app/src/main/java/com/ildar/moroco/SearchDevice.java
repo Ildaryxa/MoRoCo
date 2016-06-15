@@ -48,32 +48,32 @@ public class SearchDevice {
         if (mBluetoothAdapter!=null) {
             if (mBluetoothAdapter.isEnabled()){
                 for (BluetoothDevice device : mBluetoothAdapter.getBondedDevices()) {
-                                try {
-                                    Method m = device.getClass().getMethod("createRfcommSocket", new Class[]{int.class});
-                                    try {
-                                        BluetoothSocket bs = (BluetoothSocket) m.invoke(device, Integer.valueOf(1));
-                                        bs.connect();
-                                        try {
-                                            outStream = bs.getOutputStream(); //прием команд в iRobot
-                                            inputStream = bs.getInputStream(); //отправка команд в iRobot
-                                        } catch (IOException e) {
-                                            Log.e(TAG, "Output stream creation failed.", e);
-                                        }
-                                        connected = true;
-                                        Log.d(TAG, device.getName() + " - connected");
-                                        break;
-                                    } catch (IOException e) {
-                                        Log.e(TAG, "IOException: " + e.getLocalizedMessage());
-                                        Log.d(TAG, device.getName() + " - not connected");
-                                    } catch (InvocationTargetException e) {
-                                        e.printStackTrace();
-                                    } catch (IllegalAccessException e) {
-                                        e.printStackTrace();
-                                    }
-                                } catch (NoSuchMethodException e) {
-                                    e.printStackTrace();
-                                }
+                    try {
+                        Method m = device.getClass().getMethod("createRfcommSocket", new Class[]{int.class});
+                        try {
+                            BluetoothSocket bs = (BluetoothSocket) m.invoke(device, Integer.valueOf(1));
+                            bs.connect();
+                            try {
+                                outStream = bs.getOutputStream(); //прием команд в iRobot
+                                inputStream = bs.getInputStream(); //отправка команд в iRobot
+                            } catch (IOException e) {
+                                Log.e(TAG, "Output stream creation failed.", e);
                             }
+                            connected = true;
+                            Log.d(TAG, device.getName() + " - connected");
+                            break;
+                        } catch (IOException e) {
+                            Log.e(TAG, "IOException: " + e.getLocalizedMessage());
+                            Log.d(TAG, device.getName() + " - not connected");
+                        } catch (InvocationTargetException e) {
+                            e.printStackTrace();
+                        } catch (IllegalAccessException e) {
+                            e.printStackTrace();
+                        }
+                    } catch (NoSuchMethodException e) {
+                        e.printStackTrace();
+                    }
+                }
             }else{
                 message = "Включите Bluetooth, а затем подключитесь к устройству.";
             }
