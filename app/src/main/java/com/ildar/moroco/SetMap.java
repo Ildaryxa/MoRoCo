@@ -67,6 +67,7 @@ public class SetMap extends AppCompatActivity {
                 break;
             case (R.id.play):
                 if (correctSizeRoom) {
+                    robot.safeMode();
                     drawView.forbidden();
                     canPlay = true;
                     play();
