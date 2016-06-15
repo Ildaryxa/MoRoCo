@@ -136,8 +136,10 @@ public class MainActivity extends Activity {
                     .show();
         }
 
-
-
+        /*
+        Intent intent = new Intent(this, SetMap.class);
+        startActivity(intent);
+        */
     }
 
     public static OutputStream getOutStream() {
