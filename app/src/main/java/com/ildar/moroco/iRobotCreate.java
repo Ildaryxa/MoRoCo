@@ -22,7 +22,6 @@ public class iRobotCreate implements RobotControl {
         sendCommandtoiRobot(charmsg);
         charmsg = 132;
         sendCommandtoiRobot(charmsg);
-
     }
 
     @Override
@@ -31,8 +30,18 @@ public class iRobotCreate implements RobotControl {
     }
 
     @Override
+    public void move(char velocity, double meters) {
+
+    }
+
+    @Override
     public void rotade(char velocity, char rotatespeed) {
         drive(velocity, rotatespeed);
+    }
+
+    @Override
+    public void rotade(char velocity, char rotatespeed, double degrees) {
+
     }
 
     @Override
