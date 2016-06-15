@@ -116,10 +116,6 @@ public class Control extends AppCompatActivity {
         robot.move((char) -Math.abs(speed));
     }
 
-    public void onSpeed(View view) {
-        robot.move((char) speed);
-    }
-
     public void onRotade(View view) {
         robot.rotade((char) speed,(char) rotade);
     }
